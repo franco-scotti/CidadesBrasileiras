@@ -1,0 +1,33 @@
+﻿@model CidadesBrasileiras.Core.Models.Municipio
+@{
+    ViewData["Title"] = "Home";
+}
+
+
+<div class="text-center">
+    <h3 class="display-3">Buscar Município</h3>
+
+    <form asp-action="SearchMunicipio" method="get">
+        <input type="text" name="nome" placeholder="Digite o nome do município" class="form-control" style="max-width: 600px; margin: 0 auto; margin-top: 20px;" />
+        <button type="submit" class="btn btn-primary mt-3">Pesquisar</button>
+    </form>
+</div>
+
+@if (ViewBag.Mensagem != null)
+{
+    <div class="alert alert-warning mt-4">
+        @ViewBag.Mensagem
+    </div>
+}
+
+@if (Model != null)
+{
+    <div class="mt-4">
+        <h4>Resultado da Busca:</h4>
+        <p><strong>Município:</strong> @Model.Nome</p>
+        <p><strong>Estado:</strong> @Model.Estado.Nome</p>
+        <p><strong>Capital:</strong> @(Model.Capital ? "Sim" : "Não")</p>
+        <p><strong>População:</strong> @Model.Populacao</p>
+    </div>
+}
+
