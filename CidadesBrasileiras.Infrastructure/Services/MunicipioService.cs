@@ -15,10 +15,14 @@ namespace CidadesBrasileiras.Infrastructure.Services
             _municipioRepository = new MunicipioRepository(context);
         }
 
-        public async Task<Municipio>? ProcurarPorNome(string searchText)
+        public async Task<Municipio> ProcurarPorNome(string searchText)
         {
             return await _municipioRepository.ProcurarPorNome(searchText);
         }
 
+        public async Task<List<Municipio>> ProcurarPorPopulacao(int? populacaoInicial, int? populacaoFinal)
+        {
+            return await _municipioRepository.ProcurarPorPopulacao(populacaoInicial, populacaoFinal);
+        }
     }
 }

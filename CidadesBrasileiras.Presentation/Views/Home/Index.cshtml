@@ -1,33 +1,51 @@
 ﻿@model CidadesBrasileiras.Core.Models.Municipio
+
 @{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Buscar Município";
 }
 
+<div class="container mt-5">
 
-<div class="text-center">
-    <h3 class="display-3">Buscar Município</h3>
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-semibold">Buscar Município</h1>
+        <p class="text-muted">Digite o nome completo ou parcial de um município brasileiro</p>
+    </div>
 
-    <form asp-action="SearchMunicipio" method="get">
-        <input type="text" name="nome" placeholder="Digite o nome do município" class="form-control" style="max-width: 600px; margin: 0 auto; margin-top: 20px;" />
-        <button type="submit" class="btn btn-primary mt-3">Pesquisar</button>
-    </form>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form asp-action="SearchMunicipio" method="get" class="d-flex flex-column align-items-center">
+                <input type="text" name="nome"
+                       placeholder="Ex: São Paulo, Recife, Porto Alegre"
+                       class="form-control form-control-lg mb-3 shadow-sm"
+                       style="max-width: 600px;" />
+
+                <button type="submit" class="btn btn-primary btn-lg px-5">
+                    <i class="bi bi-search me-2"></i> Pesquisar
+                </button>
+            </form>
+        </div>
+    </div>
+
+    @if (ViewBag.Mensagem != null)
+    {
+        <div class="alert alert-warning mt-4 text-center">
+            @ViewBag.Mensagem
+        </div>
+    }
+
+    @if (Model != null)
+    {
+        <div class="card shadow-sm mt-5 mx-auto" style="max-width: 700px;">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Resultado da Busca</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Município:</strong> @Model.Nome</p>
+                <p><strong>Estado:</strong> @Model.Estado.Nome</p>
+                <p><strong>Capital:</strong> @(Model.Capital ? "Sim" : "Não")</p>
+                <p><strong>População:</strong> @Model.Populacao.ToString("N0")</p>
+            </div>
+        </div>
+    }
+
 </div>
-
-@if (ViewBag.Mensagem != null)
-{
-    <div class="alert alert-warning mt-4">
-        @ViewBag.Mensagem
-    </div>
-}
-
-@if (Model != null)
-{
-    <div class="mt-4">
-        <h4>Resultado da Busca:</h4>
-        <p><strong>Município:</strong> @Model.Nome</p>
-        <p><strong>Estado:</strong> @Model.Estado.Nome</p>
-        <p><strong>Capital:</strong> @(Model.Capital ? "Sim" : "Não")</p>
-        <p><strong>População:</strong> @Model.Populacao</p>
-    </div>
-}
-

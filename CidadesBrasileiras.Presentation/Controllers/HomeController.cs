@@ -8,12 +8,10 @@ namespace CidadesBrasileiras.Presentation.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
     private readonly MunicipioService _municipioService;
 
-    public HomeController(ILogger<HomeController> logger, AppDbContext context)
+    public HomeController(AppDbContext context)
     {
-        _logger = logger;
         _municipioService = new MunicipioService(context);
     }
 
@@ -40,5 +38,4 @@ public class HomeController : Controller
 
         return View("Index", resultado);
     }
-
 }
