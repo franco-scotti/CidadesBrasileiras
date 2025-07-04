@@ -1,4 +1,4 @@
-﻿@model CidadesBrasileiras.Core.Models.Municipio
+﻿@model List<CidadesBrasileiras.Core.Models.Municipio>
 
 @{
     ViewData["Title"] = "Buscar Município";
@@ -33,19 +33,25 @@
         </div>
     }
 
-    @if (Model != null)
+    @if (Model != null && Model.Any())
     {
         <div class="card shadow-sm mt-5 mx-auto" style="max-width: 700px;">
             <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Resultado da Busca</h5>
+                <h5 class="mb-0">@ViewBag.TituloLista (@Model.Count)</h5>
             </div>
             <div class="card-body">
-                <p><strong>Município:</strong> @Model.Nome</p>
-                <p><strong>Estado:</strong> @Model.Estado.Nome</p>
-                <p><strong>Capital:</strong> @(Model.Capital ? "Sim" : "Não")</p>
-                <p><strong>População:</strong> @Model.Populacao.ToString("N0")</p>
+                <ul class="list-group">
+                    @foreach (var municipio in Model)
+                    {
+                        <li class="list-group-item">
+                            <p><strong>Município:</strong> @municipio.Nome</p>
+                            <p><strong>Estado:</strong> @municipio.Estado.Nome</p>
+                            <p><strong>Capital:</strong> @(municipio.Capital ? "Sim" : "Não")</p>
+                            <p><strong>População:</strong> @municipio.Populacao.ToString("N0")</p>
+                        </li>
+                    }
+                </ul>
             </div>
         </div>
     }
-
 </div>

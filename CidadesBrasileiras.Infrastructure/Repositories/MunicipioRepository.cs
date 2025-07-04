@@ -9,20 +9,27 @@ using System.Threading.Tasks;
 
 namespace CidadesBrasileiras.Infrastructure.Repositories
 {
-    public class MunicipioRepository (AppDbContext _context)
+    public class MunicipioRepository(AppDbContext _context)
     {
-        public async Task<Municipio> ProcurarPorNome(string searchText)
+        public async Task<List<Municipio>> ProcurarPorNome(string searchText)
         {
-            if (searchText != null)
+            try
             {
-                var municipio = await _context.Municipios
+                searchText = searchText ?? string.Empty;
+
+                var searchLower = searchText.ToLower();
+
+                var municipios = await _context.Municipios
                     .Include(x => x.Estado)
-                    .FirstOrDefaultAsync(x => x.Nome.ToLower() == searchText.ToLower());
+                    .Where(x => EF.Functions.Like(x.Nome.ToLower(), $"%{searchLower}%"))
+                    .ToListAsync();
 
-                return municipio;
+                return municipios;
             }
-
-            else return null;
+            catch
+            {
+                return new List<Municipio>();
+            }
         }
 
         public async Task<List<Municipio>> ProcurarPorPopulacao(int? populacaoInicial, int? populacaoFinal)
@@ -43,5 +50,17 @@ namespace CidadesBrasileiras.Infrastructure.Repositories
 
             return await municipios.ToListAsync();
         }
+
+        public async Task<List<Municipio>> MunicipiosMaisPopulososNaoCapitais()
+        {
+            return _context.Municipios
+                .Include(x => x.Estado)
+                .Where(x => !x.Capital)
+                .OrderByDescending(x => x.Populacao)
+                .Take(10)
+                .ToList();
+        }
     }
 }
+
+
