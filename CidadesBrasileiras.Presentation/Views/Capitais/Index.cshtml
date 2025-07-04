@@ -1,0 +1,45 @@
+﻿@model List<CidadesBrasileiras.Core.Models.Municipio>
+
+@{
+    ViewData["Title"] = "Capitais";
+}
+
+<div class="container mt-5">
+
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-semibold">Capitais</h1>
+        <p class="text-muted">Lista das capitais e suas informações</p>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover shadow-sm">
+                <thead class="table-primary text-center">
+                    <tr>
+                        <th>Capital</th>
+                        <th>População</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Nome</td>
+                            <td>@item.Populacao.ToString("N0")</td>
+                            <td>@item.Estado.Nome</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center">
+            Nenhum estado com essa característica foi encontrado.
+        </div>
+    }
+
+</div>
