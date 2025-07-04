@@ -9,32 +9,33 @@ namespace CidadesBrasileiras.Infrastructure.Repositories
     {
         public async Task<List<EstadoCidadeMaisPopulosaDto>> ProcucarCapitalNaoPopulosa()
         {
-            var resultado = new List<EstadoCidadeMaisPopulosaDto>();
-
-            var todosEstados = await _context.Estados
-                .Include(x => x.Municipios)
-                .ToListAsync();
-
-            foreach (var estado in todosEstados)
+            try
             {
-                var municipiosOrdenados = estado.Municipios
-                    .OrderByDescending(m => m.Populacao)
-                    .ToList();
-
-                var maisPopulosa = municipiosOrdenados.FirstOrDefault();
-
-                if (maisPopulosa != null && !maisPopulosa.Capital)
-                {
-                    resultado.Add(new EstadoCidadeMaisPopulosaDto
+                var resultado = await _context.Estados
+                    .Select(estado => new
                     {
-                        Estado = estado.Nome,
-                        CidadeMaisPopulosa = maisPopulosa.Nome,
-                        Populacao = maisPopulosa.Populacao
-                    });
-                }
-            }
+                        EstadoNome = estado.Nome,
+                        CidadeMaisPopulosa = estado.Municipios
+                            .Where(m => !m.Capital)
+                            .OrderByDescending(m => m.Populacao)
+                            .FirstOrDefault()
+                    })
+                    .Where(x => x.CidadeMaisPopulosa != null)
+                    .Select(x => new EstadoCidadeMaisPopulosaDto
+                    {
+                        Estado = x.EstadoNome,
+                        CidadeMaisPopulosa = x.CidadeMaisPopulosa.Nome,
+                        Populacao = x.CidadeMaisPopulosa.Populacao
+                    })
+                    .ToListAsync();
 
-            return resultado;
+                return resultado;
+            }
+            catch (Exception ex) {                
+                Console.WriteLine(ex);
+                return null;
+            }
         }
+
     }
 }

@@ -17,11 +17,9 @@ namespace CidadesBrasileiras.Infrastructure.Repositories
             {
                 searchText = searchText ?? string.Empty;
 
-                var searchLower = searchText.ToLower();
-
                 var municipios = await _context.Municipios
                     .Include(x => x.Estado)
-                    .Where(x => EF.Functions.Like(x.Nome.ToLower(), $"%{searchLower}%"))
+                    .Where(x => EF.Functions.Like(x.Nome, $"%{searchText}%"))
                     .ToListAsync();
 
                 return municipios;
