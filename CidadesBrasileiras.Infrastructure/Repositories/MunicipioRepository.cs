@@ -58,16 +58,6 @@ namespace CidadesBrasileiras.Infrastructure.Repositories
                 .Take(10)
                 .ToList();
         }
-        public async Task<List<Municipio>> ProcurarCapitais()
-        {
-            return _context.Municipios
-                .Include(x => x.Estado)
-                .Where(x => x.Capital)
-                .OrderByDescending(x => x.Populacao)
-                .Take(10)
-                .ToList();
-        }
-
     }
 }
 

@@ -29,11 +29,5 @@ namespace CidadesBrasileiras.Infrastructure.Services
         {
             return await _municipioRepository.MunicipiosMaisPopulososNaoCapitais();
         }
-
-        public async Task<List<Municipio>> ProcurarCapitais()
-        {
-            return await _municipioRepository.ProcurarCapitais();
-        }
-
     }
 }
