@@ -1,18 +1,18 @@
 ﻿using CidadesBrasileiras.Core.Models;
+using CidadesBrasileiras.Core.Repositories;
+using CidadesBrasileiras.Core.Services;
 using CidadesBrasileiras.Infrastructure.Data;
 using CidadesBrasileiras.Infrastructure.Repositories;
 
 namespace CidadesBrasileiras.Infrastructure.Services
 {
-    public class MunicipioService
+    public class MunicipioService : IMunicipioService
     {
-        private readonly AppDbContext _context;
-        private readonly MunicipioRepository _municipioRepository;
+        private readonly IMunicipioRepository _municipioRepository;
 
-        public MunicipioService(AppDbContext context)
+        public MunicipioService(AppDbContext context, IMunicipioRepository municipioRepository)
         {
-            _context = context;
-            _municipioRepository = new MunicipioRepository(context);
+            _municipioRepository = municipioRepository;
         }
 
         public async Task<List<Municipio>> ProcurarPorNome(string searchText)

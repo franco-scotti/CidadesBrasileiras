@@ -1,4 +1,5 @@
-﻿using CidadesBrasileiras.Infrastructure.Data;
+﻿using CidadesBrasileiras.Core.Services;
+using CidadesBrasileiras.Infrastructure.Data;
 using CidadesBrasileiras.Infrastructure.Repositories;
 using CidadesBrasileiras.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -7,11 +8,11 @@ namespace CidadesBrasileiras.Presentation.Controllers
 {
     public class CapitaisController : Controller
     {
-        private readonly MunicipioService _municipioService;
+        private readonly IMunicipioService _municipioService;
 
-        public CapitaisController(AppDbContext context)
+        public CapitaisController(IMunicipioService municipioService)
         {
-            _municipioService = new MunicipioService(context);
+            _municipioService = municipioService;
         }
 
         public async Task<IActionResult> Index()

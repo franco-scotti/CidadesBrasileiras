@@ -1,3 +1,4 @@
+using CidadesBrasileiras.Core.Services;
 using CidadesBrasileiras.Infrastructure.Data;
 using CidadesBrasileiras.Infrastructure.Repositories;
 using CidadesBrasileiras.Infrastructure.Services;
@@ -7,16 +8,16 @@ namespace CidadesBrasileiras.Presentation.Controllers
 {
     public class MunicipiosController : Controller
     {
-        private readonly MunicipioService _municipiosService;
+        private readonly IMunicipioService _municipioService;
 
-        public MunicipiosController(AppDbContext context)
+        public MunicipiosController(IMunicipioService municipioService)
         {
-            _municipiosService = new MunicipioService(context);
+            _municipioService = municipioService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var resultado = await _municipiosService.MunicipiosMaisPopulososNaoCapitais();
+            var resultado = await _municipioService.MunicipiosMaisPopulososNaoCapitais();
             return View(resultado);
         }        
     }

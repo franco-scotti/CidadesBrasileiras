@@ -1,4 +1,5 @@
 using CidadesBrasileiras.Core.Models;
+using CidadesBrasileiras.Core.Services;
 using CidadesBrasileiras.Infrastructure.Data;
 using CidadesBrasileiras.Infrastructure.Services;
 using CidadesBrasileiras.Presentation.Models;
@@ -9,11 +10,11 @@ namespace CidadesBrasileiras.Presentation.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly MunicipioService _municipioService;
+    private readonly IMunicipioService _municipioService;
 
-    public HomeController(AppDbContext context)
+    public HomeController(AppDbContext context, IMunicipioService municipioService)
     {
-        _municipioService = new MunicipioService(context);
+        _municipioService = municipioService;
     }
 
     public IActionResult Index()

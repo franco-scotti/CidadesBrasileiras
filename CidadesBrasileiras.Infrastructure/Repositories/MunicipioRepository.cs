@@ -1,4 +1,5 @@
 ﻿using CidadesBrasileiras.Core.Models;
+using CidadesBrasileiras.Core.Repositories;
 using CidadesBrasileiras.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CidadesBrasileiras.Infrastructure.Repositories
 {
-    public class MunicipioRepository(AppDbContext _context)
+    public class MunicipioRepository(AppDbContext _context) : IMunicipioRepository
     {
         public async Task<List<Municipio>> ProcurarPorNome(string searchText)
         {

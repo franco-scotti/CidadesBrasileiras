@@ -1,4 +1,5 @@
-﻿using CidadesBrasileiras.Infrastructure.Data;
+﻿using CidadesBrasileiras.Core.Services;
+using CidadesBrasileiras.Infrastructure.Data;
 using CidadesBrasileiras.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,11 +8,11 @@ namespace CidadesBrasileiras.Presentation.Controllers
     public class PopulacoesController : Controller
     {
 
-        private readonly MunicipioService _municipioService;
+        private readonly IMunicipioService _municipioService;
 
-        public PopulacoesController(AppDbContext context)
+        public PopulacoesController(AppDbContext context, IMunicipioService municipioService)
         {
-            _municipioService = new MunicipioService(context);
+            _municipioService = municipioService;
         }
 
         public IActionResult Index()
