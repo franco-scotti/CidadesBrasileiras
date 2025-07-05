@@ -12,29 +12,11 @@ namespace CidadesBrasileiras.Infrastructure.Repositories
 {
     public class MunicipioRepository(AppDbContext _context) : IMunicipioRepository
     {
-        public async Task<List<Municipio>> ProcurarPorNome(string searchText)
-        {
-            try
-            {
-                searchText = searchText ?? string.Empty;
-
-                var municipios = await _context.Municipios
-                    .Include(x => x.Estado)
-                    .Where(x => EF.Functions.Like(x.Nome, $"%{searchText}%"))
-                    .ToListAsync();
-
-                return municipios;
-            }
-            catch
-            {
-                return new List<Municipio>();
-            }
-        }
-
-        public async Task<List<Municipio>> ProcurarPorPopulacao(int? populacaoInicial, int? populacaoFinal)
+        public async Task<List<Municipio>> ProcurarMunicipio(int? populacaoInicial, int? populacaoFinal, string searchText)
         {
             var municipios = _context.Municipios
                 .Include(x => x.Estado)
+                .Where(x => EF.Functions.Like(x.Nome, $"%{searchText}%"))
                 .AsQueryable();
 
             if (populacaoInicial.HasValue)

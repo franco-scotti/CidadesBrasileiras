@@ -1,6 +1,5 @@
-using CidadesBrasileiras.Core.Services;
+﻿using CidadesBrasileiras.Core.Services;
 using CidadesBrasileiras.Infrastructure.Data;
-using CidadesBrasileiras.Infrastructure.Repositories;
 using CidadesBrasileiras.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,17 +7,30 @@ namespace CidadesBrasileiras.Presentation.Controllers
 {
     public class MunicipiosController : Controller
     {
+
         private readonly IMunicipioService _municipioService;
 
-        public MunicipiosController(IMunicipioService municipioService)
+        public MunicipiosController(AppDbContext context, IMunicipioService municipioService)
         {
             _municipioService = municipioService;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var resultado = await _municipioService.MunicipiosMaisPopulososNaoCapitais();
-            return View(resultado);
-        }        
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ProcurarMunicipio(int? populacaoInicial, int? populacaoFinal, string nome)
+        {
+            var resultado = await _municipioService.ProcurarMunicipio(populacaoInicial, populacaoFinal, nome);
+
+            if (resultado == null)
+            {
+                ViewBag.Mensagem = "Não foram encontrados resultados.";
+            }
+
+            return View("Index", resultado);
+        }
     }
 }

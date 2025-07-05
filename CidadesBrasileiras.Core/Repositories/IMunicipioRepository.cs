@@ -11,7 +11,6 @@ namespace CidadesBrasileiras.Core.Repositories
     {
         Task<List<Municipio>> MunicipiosMaisPopulososNaoCapitais();
         Task<List<Municipio>> ProcurarCapitais();
-        Task<List<Municipio>> ProcurarPorNome(string searchText);
-        Task<List<Municipio>> ProcurarPorPopulacao(int? populacaoInicial, int? populacaoFinal);
+        Task<List<Municipio>> ProcurarMunicipio(int? populacaoInicial, int? populacaoFinal, string searchText);
     }
 }

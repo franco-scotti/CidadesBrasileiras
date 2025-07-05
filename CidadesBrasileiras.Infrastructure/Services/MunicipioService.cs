@@ -15,14 +15,9 @@ namespace CidadesBrasileiras.Infrastructure.Services
             _municipioRepository = municipioRepository;
         }
 
-        public async Task<List<Municipio>> ProcurarPorNome(string searchText)
+        public async Task<List<Municipio>> ProcurarMunicipio(int? populacaoInicial, int? populacaoFinal, string searchText)
         {
-            return await _municipioRepository.ProcurarPorNome(searchText);
-        }
-
-        public async Task<List<Municipio>> ProcurarPorPopulacao(int? populacaoInicial, int? populacaoFinal)
-        {
-            return await _municipioRepository.ProcurarPorPopulacao(populacaoInicial, populacaoFinal);
+            return await _municipioRepository.ProcurarMunicipio(populacaoInicial, populacaoFinal, searchText);
         }
 
         public async Task<List<Municipio>> MunicipiosMaisPopulososNaoCapitais()

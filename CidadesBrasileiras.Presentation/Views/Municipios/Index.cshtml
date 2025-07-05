@@ -1,39 +1,88 @@
-@model List<CidadesBrasileiras.Core.Models.Municipio>
-
+Ôªø@model List<CidadesBrasileiras.Core.Models.Municipio>
 @{
-    ViewData["Title"] = "MunicÌpios Mais populosos que n„o s„o capitais:";
+    ViewData["Title"] = "Munic√≠pios";
 }
 
-<div class="container mt-5">
+<div class="container mt-5" style="max-width: 900px;padding-bottom:80px;">
 
     <div class="text-center mb-5">
-        <h2 class="display-4 fw-semibold">MunicÌpios mais populosos que n„o s„o capitais:</h2>
-        <p class="text-muted">Lista dos MunicÌpios que n„o capitais</p>
-
+        <h1 class="display-4 fw-semibold">Buscar Munic√≠pios</h1>
+        <p class="text-muted">Informe o nome do munic√≠pio, a popula√ß√£o m√≠nima e/ou m√°xima para filtrar os munic√≠pios</p>
     </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form asp-action="ProcurarMunicipio" method="get" class="d-flex flex-column align-items-center">
+                <div class="row justify-content-center w-100 g-3">
+                    <div class="col-md-5">
+                        <input type="text" name="nome"
+                               placeholder="Munic√≠pio"
+                               class="form-control form-control-lg mb-3 shadow-sm"
+                               style="max-width: 600px;" />
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" name="populacaoInicial" min="0"
+                               class="form-control form-control-lg shadow-sm"
+                               placeholder="Popula√ß√£o m√≠nima"
+                               value="@Context.Request.Query["populacaoInicial"]" />
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" name="populacaoFinal" min="0"
+                               class="form-control form-control-lg shadow-sm"
+                               placeholder="Popula√ß√£o m√°xima"
+                               value="@Context.Request.Query["populacaoFinal"]" />
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg px-5 mt-4">
+                    <i class="bi bi-search me-2"></i> Pesquisar
+                </button>
+            </form>
+        </div>
+    </div>
+
+    @if (ViewBag.Mensagem != null)
+    {
+        <div class="alert alert-warning mt-4 text-center">
+            @ViewBag.Mensagem
+        </div>
+    }
 
     @if (Model != null && Model.Any())
     {
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover shadow-sm">
-                <thead class="table-primary text-center">
-                    <tr>
-                        <th>MunicÌpio</th>
-                        <th>Estado</th>
-                        <th>PopulaÁ„o</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
+        <div class="card shadow-sm mt-5 mx-auto">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Resultado da Busca</h5>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped mb-0">
+                    <thead class="table-light">
                         <tr>
-                            <td>@item.Nome</td>
-                            <td>@item.Estado.Nome</td>
-                            <td>@item.Populacao.ToString("N0")</td>
+                            <th>Munic√≠pio</th>
+                            <th>Estado</th>
+                            <th>Capital</th>
+                            <th>Popula√ß√£o</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var municipio in Model)
+                        {
+                            <tr>
+                                <td>@municipio.Nome</td>
+                                <td>@municipio.Estado.Nome</td>
+                                <td>@(municipio.Capital ? "Sim" : "N√£o")</td>
+                                <td>@municipio.Populacao.ToString("N0")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else if (Model != null)
+    {
+        <div class="alert alert-info mt-4 text-center">
+            Nenhum munic√≠pio encontrado para os filtros informados.
         </div>
     }
 
