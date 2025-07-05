@@ -64,7 +64,6 @@ namespace CidadesBrasileiras.Infrastructure.Repositories
                 .Include(x => x.Estado)
                 .Where(x => x.Capital)
                 .OrderByDescending(x => x.Populacao)
-                .Take(10)
                 .ToList();
         }
 

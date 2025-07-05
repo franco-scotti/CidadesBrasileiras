@@ -45,7 +45,13 @@
                         <li class="nav-item">
                             <a class="nav-link @((ViewData["Title"]?.ToString() == "Capitais") ? "active" : "")"
                                asp-area="" asp-controller="Capitais" asp-action="Index">
-                                <i class="bi bi-flag-fill me-1"></i> Capitais
+                                <i class="bi bi-star-fill me-1"></i> Capitais
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @((ViewData["Title"]?.ToString() == "Municipios") ? "active" : "")"
+                               asp-area="" asp-controller="Municipios" asp-action="Index">
+                                <i class="bi bi-people-fill me-1"></i> Municípios
                             </a>
                         </li>
                     </ul>
