@@ -1,38 +1,60 @@
-﻿@model List<CidadesBrasileiras.Core.Models.Dtos.EstadoCidadeMaisPopulosaDto>
+﻿@model List<CidadesBrasileiras.Core.Models.Dtos.EstadoPopulacaoTotalDto>
 
 @{
-    ViewData["Title"] = "Estados cuja a capital não é a cidade mais populosa";
+    ViewData["Title"] = "Estados";
 }
 
-<div class="container mt-5">
+<div class="container mt-5" style="max-width: 900px;padding-bottom:80px;">
 
     <div class="text-center mb-5">
-        <h1 class="display-4 fw-semibold">Estados cuja a capital não é a cidade mais populosa</h1>
-        <p class="text-muted">Lista dos estados cuja capital não é a cidade mais populosa</p>
+        <h1 class="display-4 fw-semibold">Estados</h1>
+        <p class="text-muted">Lista dos Estados. Informe um Estado.</p>
     </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form asp-action="ProcurarEstado" method="get" class="d-flex flex-column align-items-center">
+                <select class="form-select" name="id" aria-label="Selecione um Estado">
+                    <option value="">Selecione um Estado</option>
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.idEstado">@item.Estado</option>
+                    }
+                </select>
+
+                <button type="submit" class="btn btn-primary btn-lg px-5 mt-4">
+                    <i class="bi bi-search me-2"></i> Pesquisar
+                </button>
+            </form>
+        </div>
+    </div>
+    
 
     @if (Model != null && Model.Any())
     {
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover shadow-sm">
-                <thead class="table-primary text-center">
-                    <tr>
-                        <th>Estado</th>
-                        <th>Cidade Mais Populosa</th>
-                        <th>População</th>
-                    </tr>
-                </thead>
-                <tbody>
+        <div class="card shadow-sm mt-5 mx-auto" style="max-width: 900px;">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Resultado da Busca</h5>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Estado</th>
+                            <th>População</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                     @foreach (var item in Model)
                     {
                         <tr>
                             <td>@item.Estado</td>
-                            <td>@item.CidadeMaisPopulosa</td>
-                            <td>@item.Populacao.ToString("N0")</td>
+                            <td>@item.PopulacaoTotal.ToString("N0")</td>
                         </tr>
                     }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     }
     else

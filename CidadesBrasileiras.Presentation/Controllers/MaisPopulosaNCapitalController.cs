@@ -6,25 +6,25 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CidadesBrasileiras.Presentation.Controllers
 {
-    public class EstadosController : Controller
+    public class MaisPopulosaNCapitalController : Controller
     {
         private readonly IEstadoService _estadoService;
 
-        public EstadosController (AppDbContext context)
+        public MaisPopulosaNCapitalController(AppDbContext context)
         {
             _estadoService = new EstadoService(context);
         }
 
-        public async Task<IActionResult> Index(int? id)
+        public async Task<IActionResult> Index()
         {
-            var resultado = await _estadoService.ProcurarEstado(id);
+            var resultado = await _estadoService.ProcurarCapitalNaoPopulosa();
             return View(resultado);
         }
 
         [HttpGet]
-        public async Task<IActionResult> ProcurarEstado(int? id)
+        public async Task<IActionResult> ProcurarCapitalNaoPopulosa()
         {
-            var resultado = await _estadoService.ProcurarEstado(id);
+            var resultado = await _estadoService.ProcurarCapitalNaoPopulosa();
 
             return View("Index", resultado);
         }

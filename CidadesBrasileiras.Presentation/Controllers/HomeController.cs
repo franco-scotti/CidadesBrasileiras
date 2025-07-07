@@ -17,29 +17,10 @@ public class HomeController : Controller
         _municipioService = municipioService;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> SearchMunicipio(string nome)
-    {
-        if (string.IsNullOrWhiteSpace(nome))
-        {
-            ViewBag.Mensagem = "Digite um nome para busca.";
-            return View("Index", new List<Municipio>());
-        }
-
-        var resultado = await _municipioService.ProcurarPorNome(nome);
-
-        if (resultado == null || !resultado.Any())
-        {
-            ViewBag.Mensagem = $"Nenhum município encontrado para \"{nome}\".";
-            resultado = new List<Municipio>();
-        }
-
-        return View("Index", resultado);
+        var resultado = await _municipioService.MunicipiosMaisPopulososNaoCapitais();
+        return View(resultado);
     }
 
 }

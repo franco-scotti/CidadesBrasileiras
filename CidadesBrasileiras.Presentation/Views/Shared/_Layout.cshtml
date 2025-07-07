@@ -11,66 +11,55 @@
     <link rel="stylesheet" href="~/CidadesBrasileiras.Presentation.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-dark bg-primary shadow-sm fixed-top">
-            <div class="container">
-                <a class="navbar-brand fs-4" asp-area="" asp-controller="Home" asp-action="Index">
-                    Cidades Brasileiras
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="mainNavbar">
-                    <ul class="navbar-nav ms-auto mb-2 mb-sm-0">
-                        <li class="nav-item">
-                            <a class="nav-link @((ViewData["Title"]?.ToString() == "Home") ? "active" : "")"
-                               asp-area="" asp-controller="Home" asp-action="Index">
-                                <i class="bi bi-house-door-fill me-1"></i> Home
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link @((ViewData["Title"]?.ToString() == "Populações") ? "active" : "")"
-                               asp-area="" asp-controller="Populacoes" asp-action="Index">
-                                <i class="bi bi-people-fill me-1"></i> Populações
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link @((ViewData["Title"]?.ToString() == "Estados") ? "active" : "")"
-                               asp-area="" asp-controller="Estados" asp-action="Index">
-                                <i class="bi bi-flag-fill me-1"></i> Estados
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link @((ViewData["Title"]?.ToString() == "Capitais") ? "active" : "")"
-                               asp-area="" asp-controller="Capitais" asp-action="Index">
-                                <i class="bi bi-star-fill me-1"></i> Capitais
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link @((ViewData["Title"]?.ToString() == "Municipios") ? "active" : "")"
-                               asp-area="" asp-controller="Municipios" asp-action="Index">
-                                <i class="bi bi-people-fill me-1"></i> Municípios
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+    <div class="d-flex">
+        <!-- Sidebar lateral -->
+        <nav class="bg-primary text-white p-3 vh-100" style="width: 250px; position: fixed; left: 0; top: 0;">
+            <h4 class="text-white mb-4">Cidades Brasileiras</h4>
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white @((ViewData["Title"]?.ToString() == "Cidades Brasileiras - Home") ? "active text-primary" : "")"
+                       asp-area="" asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-house-door-fill me-2"></i> Home
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white @((ViewData["Title"]?.ToString() == "Municípios") ? "active text-primary" : "")"
+                       asp-area="" asp-controller="Municipios" asp-action="Index">
+                        <i class="bi bi-people-fill me-2"></i> Municípios
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white @((ViewData["Title"]?.ToString() == "Estados") ? "active text-primary" : "")"
+                       asp-area="" asp-controller="Estados" asp-action="Index">
+                        <i class="bi bi-flag-fill me-2"></i> Estados
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white @((ViewData["Title"]?.ToString() == "Capitais") ? "active text-primary" : "")"
+                       asp-area="" asp-controller="Capitais" asp-action="Index">
+                        <i class="bi bi-star-fill me-2"></i> Capitais
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white @((ViewData["Title"]?.ToString() == "Estados Cidade Mais Populosa") ? "active text-primary" : "")"
+                       asp-area="" asp-controller="MaisPopulosaNCapital" asp-action="Index">
+                        <i class="bi bi-star-fill me-2"></i> Cidade Mais Populosa (Não Capital)
+                    </a>
+                </li>
+            </ul>
         </nav>
-    </header>
 
-    <div class="container" style="padding-top: 80px;">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+        <!-- Conteúdo principal -->
+        <div class="container-fluid" style="margin-left: 250px; padding-top: 20px;">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
 
-    <footer class="border-top footer text-muted mt-auto py-3 bg-light">
-        <div class="container text-center">
-            &copy; 2025 - CidadesBrasileiras - Projeto e Arquitetura de Software
+            <footer class="border-top footer text-muted mt-auto py-3 bg-light text-center">
+                &copy; 2025 - CidadesBrasileiras - Projeto e Arquitetura de Software
+            </footer>
         </div>
-    </footer>
+    </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

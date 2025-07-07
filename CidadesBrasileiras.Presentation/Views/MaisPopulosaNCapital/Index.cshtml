@@ -1,0 +1,45 @@
+﻿@model List<CidadesBrasileiras.Core.Models.Dtos.EstadoCidadeMaisPopulosaDto>
+
+@{
+    ViewData["Title"] = "Estados Cidade Mais Populosa";
+}
+
+<div class="container mt-5" style="max-width: 900px;padding-bottom:80px;">
+
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-semibold">Estados cuja capital não é a cidade mais populosa</h1>
+        <p class="text-muted">Lista dos estados cuja capital não é a cidade mais populosa</p>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover shadow-sm">
+                <thead class="table-primary text-center">
+                    <tr>
+                        <th>Estado</th>
+                        <th>Cidade Mais Populosa</th>
+                        <th>População</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Estado</td>
+                            <td>@item.CidadeMaisPopulosa</td>
+                            <td>@item.Populacao.ToString("N0")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center">
+            Nenhum estado com essa característica foi encontrado.
+        </div>
+    }
+
+</div>
